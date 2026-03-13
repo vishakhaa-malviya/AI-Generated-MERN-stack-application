@@ -40,7 +40,7 @@ const Register = () => {
     // Handle registration logic here
     if (!validateForm()) return;
     await handleRegister({ username, email, password });
-    navigate("/");
+    navigate("/home");
   };
 
   return (

@@ -34,7 +34,7 @@ const Login = () => {
     // Handle login logic here
     if (!validateForm()) return;
     await handleLogin({ email, password });
-    navigate("/");
+    navigate("/home");
   };
   if (loading) {
     return (

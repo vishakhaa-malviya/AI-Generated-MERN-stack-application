@@ -27,7 +27,12 @@ async function registerController(req, res) {
         });
         
         const token = jwt.sign({ id: newUser._id , username: newUser.username}, process.env.JWT_SECRET, { expiresIn: '1h' });
-        res.cookie('token', token);
+        res.cookie('token', token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",  // true on render, false on localhost
+    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",  // "none" required for cross-origin
+    maxAge: 7 * 24 * 60 * 60 * 1000
+});
         res.status(201).json({ 
             message: 'User registered successfully' 
         ,
@@ -66,7 +71,12 @@ async function loginController(req, res) {
         }
         const token = jwt.sign({ id: user._id , username: user.username}, process.env.JWT_SECRET, { expiresIn: '1h' });
        
-        res.cookie('token', token);
+        res.cookie('token', token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",  // true on render, false on localhost
+    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",  // "none" required for cross-origin
+    maxAge: 7 * 24 * 60 * 60 * 1000
+});
     
         res.status(200).json({ 
             message: 'Login successfully',
