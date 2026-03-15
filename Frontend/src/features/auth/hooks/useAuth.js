@@ -55,7 +55,7 @@ export const useAuth = () =>{
     const getAndSetUser = async () => {
     try {
       const data = await getMe();
-
+      console.log(data)
       if (data?.user) {
         setUser(data.user);
       } else {
@@ -75,5 +75,6 @@ export const useAuth = () =>{
 
             getAndSetUser()
     }, [])
+    
     return {user, loading, handleLogin, handleLogout, handleRegister}
 }
