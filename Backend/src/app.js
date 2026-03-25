@@ -8,7 +8,7 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-    origin: ["http://localhost:5173", "https://ai-generated-mern-stack-application.vercel.app"],
+    origin: ["https://ai-generated-mern-stack-application-1bv31cbhj.vercel.app/home"],
     credentials: true
 }))
 app.use('/api/auth', authRoutes)
