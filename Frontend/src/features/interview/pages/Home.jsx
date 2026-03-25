@@ -2,14 +2,16 @@ import React, { useState, useRef } from "react";
 import "../style/home.scss";
 import { useInterview } from "../hooks/useInterview";
 import { useNavigate } from "react-router";
-
+import { useAuth } from "../../auth/hooks/useAuth"
 const Home = () => {
   const navigate = useNavigate();
   const { loading, generateReport, reports } = useInterview();
   const [jobDescription, setJobDescription] = useState("");
   const [selfDescription, setSelfDescription] = useState("");
   const [errors, setErrors] = useState({});
+  const [selectedFile, setSelectedFile] = useState(null);
   const resumeInputRef = useRef();
+  const { handleLogout } = useAuth()
   const validateForm = () => {
   const newErrors = {};
   const resumeFile = resumeInputRef.current?.files[0];
@@ -56,8 +58,31 @@ const handleGenerateReport = async () => {
   return (
     <main className="home">
       <div className="layout">
-
       <div className="wrapper">
+      <nav style={{
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: '1rem 2rem',
+   
+    borderBottom: '0.5px solid #1e293b'
+}}>
+   
+    <button
+        onClick={handleLogout}
+        style={{
+            background: '#ff2e88',
+            color: '#fff',
+            border: 'none',
+            padding: '0.5rem 1.2rem',
+            borderRadius: '8px',
+            cursor: 'pointer',
+            fontWeight: '600'
+        }}
+    >
+        Logout
+    </button>
+</nav>
         {/* HEADER */}
         <div className="hero">
           <h1>
@@ -122,7 +147,7 @@ focus:ring-pink-500
               </div>
 
               <div className="upload-box">
-                <input ref={resumeInputRef} hidden type="file" id="resume" />
+                <input ref={resumeInputRef} hidden type="file" id="resume"     onChange={(e) => setSelectedFile(e.target.files[0])}/>
                 <label htmlFor="resume">
                   <div className="upload-content">
                     <div className="upload-icon">⬆</div>
@@ -135,6 +160,24 @@ focus:ring-pink-500
   <small className="error">{errors.profile}</small>
 )}
             </div>
+
+{/* File selected indicator */}
+{selectedFile && (
+    <div style={{
+        marginTop: '0.5rem',
+        padding: '0.5rem 1rem',
+        background: 'rgba(34,197,94,0.1)',
+        border: '1px solid rgba(34,197,94,0.3)',
+        borderRadius: '8px',
+        color: '#4ade80',
+        fontSize: '0.85rem',
+        display: 'flex',
+        alignItems: 'center',
+        gap: '0.5rem'
+    }}>
+        ✅ {selectedFile.name}
+    </div>
+)}
 
             <div className="divider">
               <span>OR</span>

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-    baseURL: "https://ai-generated-mern-stack-application.onrender.com",
+    baseURL: "http://localhost:3000",
     withCredentials: true,
 })
 
@@ -48,7 +48,9 @@ export const getAllInterviewReports = async() => {
     }
 }
 
+
 export const generateResumePdf = async({ interviewReportId}) =>{
+    
     const response = await api.post(`/api/interview/resume/pdf/${interviewReportId}`, null,{
          responseType: "blob"
     });
