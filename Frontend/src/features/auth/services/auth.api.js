@@ -24,7 +24,7 @@ export async function login({ email, password }) {
     } catch (error) {
         console.log("Error in Login Service Api", error)
         console.log("LOGIN ERROR:", error.response?.data);
-console.log("FULL ERROR:", error);
+         throw error; // ✅ VERY IMPORTANT
     }
 }
 
